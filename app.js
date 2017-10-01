@@ -6,8 +6,7 @@ var apiController = require('./controllers/apiController');
 var app = express();
 
 var port = process.env.PORT || 3000;
-
-app.use('/assets', express.static(__dirname + '/public'));
+app.use('/', express.static(__dirname + '/public'));
 app.set('view enginge', 'ejs');
 
 mongoose.connect(index.getDbConnectionString());

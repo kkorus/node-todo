@@ -13,7 +13,7 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/api/todos/:id', function (req, res) {
+    app.get('/api/todo/:id', function (req, res) {
         Todos.findById({ _id: req.params.id }, function (err, todo) {
             if (err) throw err;
 
@@ -21,13 +21,15 @@ module.exports = function (app) {
         });
     });
 
-    app.post('/api/todos', function (req, res) {
+    app.post('/api/todo', function (req, res) {
         if (req.body.id) {
             Todos.findByIdAndUpdate(req.body.id, {
-                todo: req.body.todo,
-                isDone: req.body.isDone,
-                hasAttachment: req.body.hasAttachment
-            }, function (err, todo) {
+                $set: {
+                    todo: req.body.todo,
+                    isDone: req.body.isDone,
+                    hasAttachment: req.body.hasAttachment
+                }
+            }, function (err) {
                 if (err) throw err;
                 res.send('Success')
             });
@@ -46,7 +48,7 @@ module.exports = function (app) {
         }
     });
 
-    app.post('/api/todos', function (req, res) {
+    app.post('/api/todo', function (req, res) {
         Todos.findByIdAndRemove(req.body.id, function () {
             if (err) throw err;
             res.send('Success');
